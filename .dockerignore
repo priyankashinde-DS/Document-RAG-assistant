@@ -1,0 +1,7 @@
+venv/
+__pycache__/
+*.pyc
+artifacts/
+logs/
+.git/
+data/docs/.DS_Store
