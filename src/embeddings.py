@@ -1,8 +1,8 @@
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from .logging_config import setup_logger
-from .config import EMBEDDING_MODEL_NAME
+from src.logging_config import setup_logger
+from src.config import EMBEDDING_MODEL_NAME
 
 logger = setup_logger("embeddings")
 

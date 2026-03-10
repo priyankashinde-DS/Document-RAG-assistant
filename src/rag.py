@@ -4,10 +4,10 @@ import time
 import faiss
 import requests
 
-from .logging_config import setup_logger
-from .config import INDEX_PATH, META_PATH, OLLAMA_URL, OLLAMA_MODEL, TOP_K, MAX_CONTEXT_CHARS
-from .embeddings import Embedder
-from .prompts import build_prompt
+from src.logging_config import setup_logger
+from src.config import INDEX_PATH, META_PATH, OLLAMA_URL, OLLAMA_MODEL, TOP_K, MAX_CONTEXT_CHARS
+from src.embeddings import Embedder
+from src.prompts import build_prompt
 
 logger = setup_logger("rag")
 

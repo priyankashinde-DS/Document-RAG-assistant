@@ -3,10 +3,10 @@ import json
 import faiss
 from PyPDF2 import PdfReader
 
-from .logging_config import setup_logger
-from .config import DOCS_DIR, ARTIFACTS_DIR, INDEX_PATH, META_PATH
-from .chunking import chunk_text
-from .embeddings import Embedder
+from src.logging_config import setup_logger
+from src.config import DOCS_DIR, ARTIFACTS_DIR, INDEX_PATH, META_PATH
+from src.chunking import chunk_text
+from src.embeddings import Embedder
 
 logger = setup_logger("ingest")
 
