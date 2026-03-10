@@ -1,0 +1,55 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_models:/root/.ollama
+    restart: unless-stopped
+
+  # one-time ingestion job (run when you want)
+  ingest:
+    build: .
+    container_name: ingest
+    depends_on:
+      - ollama
+    volumes:
+      - ./data:/app/data
+      - ./artifacts:/app/artifacts
+      - ./logs:/app/logs
+    command: ["python", "-m", "src.ingest"]
+    profiles: ["tools"]
+
+  api:
+    build: .
+    container_name: api
+    depends_on:
+      - ollama
+    environment:
+      OLLAMA_URL: "http://ollama:11434/api/generate"
+      OLLAMA_MODEL: "phi3:mini"
+      TOP_K: "3"
+      MAX_CONTEXT_CHARS: "4500"
+    volumes:
+      - ./data:/app/data
+      - ./artifacts:/app/artifacts
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+
+  ui:
+    build: .
+    container_name: ui
+    depends_on:
+      - api
+    volumes:
+      - ./logs:/app/logs
+    ports:
+      - "8501:8501"
+    command: ["streamlit", "run", "src/ui_streamlit.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    restart: unless-stopped
+
+volumes:
+  ollama_models:
